@@ -20,15 +20,14 @@ def read_from_file(filepath):
     list_to_append = source_data
     if os.path.exists(filepath):
         with open(filepath, 'r') as f:
-            line = f.readline()
-            while line:
+            for line in f.readlines()[1:]:
                 line = line.strip()
-                if line != "":
+                if not line.isdigit():
                     list_to_append.append(line)
                 else:
                     list_to_append = search_data
-                line = f.readline()
-        return source_data, list(set(search_data))
+
+    return source_data, list(set(search_data))
 
 
 @count_words

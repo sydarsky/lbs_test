@@ -36,9 +36,9 @@ def read_from_file(filepath):
     if os.path.exists(filepath):
         with open(filepath, 'r') as f:
             data = f.readlines()
-        if not pattern_match(data):
+        if not pattern_match(data[1:]):
             raise ValueError("Wrong line pattern -> {}".format(row))
-        data = [i.replace("\n", "").split() for i in data]
+        data = [i.replace("\n", "").split() for i in data[1:]]
     if data is not None:
         return sorted(data, key=lambda x: int(x[3]))
 
