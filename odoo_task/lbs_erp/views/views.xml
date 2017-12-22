@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_lbs_test_menu" name="LBS Test"/>
+        <menuitem id="lbs_test_menu" name="LBS Test"
+                  parent="main_lbs_test_menu"/>
+
+        <record model="ir.actions.act_window" id="tests_list_action">
+            <field name="name">Tests</field>
+            <field name="res_model">test.test</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first test!
+                </p>
+            </field>
+        </record>
+        <menuitem id="tests_menu" name="Tests" parent="lbs_test_menu"
+                  action="tests_list_action"/>
+
+        <record model="ir.actions.act_window" id="test_sessions_list_action">
+            <field name="name">Test sessions</field>
+            <field name="res_model">test.test_session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first test session!
+                </p>
+            </field>
+        </record>
+        <menuitem id="test_sessions_menu" name="Test sessions" parent="lbs_test_menu"
+                  action="test_sessions_list_action"/>
+
+        <record model="ir.ui.view" id="partner_tester_form_view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Tests">
+                        <group>
+                            <field name="is_tester"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="partner_tester_search_view">
+            <field name="name">res.partner.select.inherit.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+              <filter name="group_company" position="after">
+                  <filter string="Tests in 30 days" domain="[('tests_expected','!=',0)]" />
+              </filter>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="contact_list_action">
+            <field name="name">Personal</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="configuration_menu" name="Personal"
+                  parent="main_lbs_test_menu"/>
+        <menuitem id="contact_menu" name="Partners"
+                  parent="configuration_menu"
+                  action="contact_list_action"/>
+
+    </data>
+</odoo>
